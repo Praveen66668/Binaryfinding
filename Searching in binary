@@ -1,134 +1,59 @@
+/*
 Praveen M
-Date - 24/09/2024
-import java.util.Scanner;
-public class TicTacToe 
-{
-    private static char[][] board = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
-    private static char currentPlayer = 'X';
-    private static boolean gameEnded = false;
+date : 24.08.202
+*/
+
+
+public class Binary {
+
+    /*
+     * Performs a binary search on a sorted array.
+     * target the integer value to search for
+     * return the index of the target value if found, otherwise -1
+     */
+    public static int binarySearch(int[] arr, int target) {
+        if (arr == null) {
+            throw new IllegalArgumentException("Array cannot be null");
+        }
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] == target) {
+                return mid; 
+            }
+            if (arr[mid] < target) {
+                left = mid + 1; 
+            } else {
+                right = mid - 1; 
+            }
+        }
+
+        return -1; 
+    }
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean playAgain;
-        do
-        {
-            initializeBoard();
-            while (!gameEnded) 
-            {
-                printBoard();
-                playerMove(scanner);
-                checkForWinner();
-                switchPlayer();
-            }
-            printBoard();
-            System.out.println("Game Over!");
-            System.out.println("Do you want to play again? (yes/no)");
-            playAgain = scanner.next().equalsIgnoreCase("yes");
+        
+        int[] sortedArray1 = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        System.out.println("Index of 7: " + binarySearch(sortedArray1, 7)); 
+
+        
+        System.out.println("Index of 15: " + binarySearch(sortedArray1, 15)); 
+
+        System.out.println("Index of 2: " + binarySearch(sortedArray1, 2));
+       
+        System.out.println("Index of 20: " + binarySearch(sortedArray1, 20)); // Output: -1
+
+        int[] sortedArray2 = {};
+        System.out.println("Index of 1 in empty array: " + binarySearch(sortedArray2, 1)); // Output: -1
+
+        
+        try {
+            System.out.println("Index of 5 in null array: " + binarySearch(null, 5));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage()); 
         }
-         while (playAgain);
-        System.out.println("Thanks for playing!");
-    }
-
-    private static void initializeBoard()
-     {
-        board = new char[][]{{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
-        currentPlayer = 'X';
-        gameEnded = false;
-    }
-
-    private static void printBoard()
-     {
-        System.out.println(" " + board[0][0] + " | " + board[0][1] + " | " + board[0][2]);
-        System.out.println("-----------");
-        System.out.println(" " + board[1][0] + " | " + board[1][1] + " | " + board[1][2]);
-        System.out.println("-----------");
-        System.out.println(" " + board[2][0] + " | " + board[2][1] + " | " + board[2][2]);
-    }
-
-    private static void playerMove(Scanner scanner) 
-    {
-        int choice;
-        boolean validMove = false;
-
-        while (!validMove)
-         {
-            System.out.println("Player " + currentPlayer + ", enter a number (1-9) to make a move:");
-            choice = scanner.nextInt();
-            validMove = makeMove(choice);
-        }
-    }
-
-    private static boolean makeMove(int choice)
-     {
-        char mark = currentPlayer;
-        int row = (choice - 1) / 3;
-        int col = (choice - 1) % 3;
-
-        if (choice < 1 || choice > 9 || board[row][col] == 'X' || board[row][col] == 'O')
-         {
-            System.out.println("This move is not valid.");
-            return false;
-        } else 
-        {
-            board[row][col] = mark;
-            return true;
-        }
-    }
-
-    private static void checkForWinner()
-     {
-        if (checkRows() || checkColumns() || checkDiagonals()) {
-            System.out.println("Player " + currentPlayer + " wins!");
-            gameEnded = true;
-        } else if (isBoardFull()) 
-        {
-            System.out.println("It's a tie!");
-            gameEnded = true;
-        }
-    }
-
-    private static boolean checkRows()
-     {
-        for (int i = 0; i < 3; i++)
-         {
-            if (board[i][0] == currentPlayer && board[i][1] == currentPlayer && board[i][2] == currentPlayer) 
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean checkColumns() 
-    {
-        for (int i = 0; i < 3; i++) {
-            if (board[0][i] == currentPlayer && board[1][i] == currentPlayer && board[2][i] == currentPlayer)
-             {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean checkDiagonals()
-     {
-        return (board[0][0] == currentPlayer && board[1][1] == currentPlayer && board[2][2] == currentPlayer) ||
-               (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer);
-    }
-
-    private static boolean isBoardFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] != 'X' && board[i][j] != 'O')
-                 {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private static void switchPlayer() 
-    {
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     }
 }
